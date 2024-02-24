@@ -5,10 +5,6 @@
 3. MSSQL ✅
 4. ORACLE ✅
 
-### Database Name
-
-**`test_db`**
-
 ### Users Table
 
 There is a **`Users`** table in each database so you can perform tests on that table.

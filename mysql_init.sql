@@ -10,7 +10,7 @@ CREATE TABLE Users (
     phone_number VARCHAR(100)
 );
 
--- Insert your 5 example users
+-- insert your 5 example users
 INSERT INTO Users (firstname, lastname, username, role, password, email, phone_number)
 VALUES
     ('Alice', 'Smith', 'asmith', 'customer', 'securepassword1', 'alice@example.com', '555-1234'),

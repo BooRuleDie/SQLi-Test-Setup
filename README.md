@@ -2,8 +2,8 @@
 
 1. PostgreSQL ✅
 2. MySQL ✅
-3. MSSQL
-4. ORACLE
+3. MSSQL ✅
+4. ORACLE ✅
 
 ### Database Name
 
@@ -41,7 +41,13 @@ make status
 
 ### Details
 
-I recommend using DBeavers as it's compatible with all these databases. If that's the case, you should use the following URL value to be able to connect MySQL properly:
+I recommend using DBeaver as it's compatible with all these databases. If that's the case, you should use the following URL value to be able to connect MySQL properly:
 ```URL
 jdbc:mysql://localhost:3306/test_db?allowPublicKeyRetrieval=true&useSSL=false
 ```
+
+In order to connect ORACLE database, you can use following data:
+* database name: `FREEPDB1`
+* username: `SYS`
+* role: `SYSDBA`
+* password: `password you specified in the docker-compose file`

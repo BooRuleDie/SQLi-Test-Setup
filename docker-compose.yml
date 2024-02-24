@@ -25,3 +25,23 @@ services:
     volumes:
       - ./mysql_init.sql:/docker-entrypoint-initdb.d/init.sql
 
+  # database & table set-up will be made by the Flask app
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest 
+    restart: unless-stopped
+    environment:
+      SA_PASSWORD: Verystrongpassword1337
+      ACCEPT_EULA: Y
+    ports:
+      - 127.0.0.1:1433:1433
+  
+  # database & table set-up will be made by the Flask app
+  oracle:
+    image: container-registry.oracle.com/database/free:latest 
+    restart: unless-stopped
+    environment:
+      ORACLE_PWD: Verystrongpassword1337
+    ports:
+      - 127.0.0.1:1521:1521
+    volumes:
+      - ./oracle:/opt/oracle/scripts/startup

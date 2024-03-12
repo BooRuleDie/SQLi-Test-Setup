@@ -3,10 +3,10 @@ CREATE TYPE user_roles AS ENUM ('customer', 'seller', 'agent', 'admin');
 
 -- create Users table
 CREATE TABLE Users (
-    user_id SERIAL PRIMARY KEY,  -- SERIAL for auto-incrementing integer
+    user_id SERIAL PRIMARY KEY, 
     username VARCHAR(100),
     password VARCHAR(255),
-    role user_roles,
+    role VARCHAR(255),
     firstname VARCHAR(100),
     lastname VARCHAR(100),
     email VARCHAR(100),

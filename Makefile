@@ -6,3 +6,6 @@ down:
 
 status:
 	docker container ls -a
+
+install:
+	pip install "fastapi[all]"

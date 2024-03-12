@@ -46,4 +46,4 @@ In order to connect ORACLE database, you can use following data:
 * database name: `FREEPDB1`
 * username: `SYS`
 * role: `SYSDBA`
-* password: `password you specified in the docker-compose file`
+* password: `password you specified in the .env file`

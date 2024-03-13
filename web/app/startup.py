@@ -24,6 +24,7 @@ def get_fake_user_data(times: int):
             fake.last_name(),
             fake.email(),
             fake.msisdn(),
+            random.randint(17, 60)
         )
         for _ in range(times)
     ]
@@ -41,7 +42,8 @@ async def create_users_tables():
             firstname VARCHAR(100),
             lastname VARCHAR(100),
             email VARCHAR(100),
-            phone_number VARCHAR(100)
+            phone_number VARCHAR(100),
+            age INT
         );""",
             is_fetch=False,
         ),
@@ -55,7 +57,8 @@ async def create_users_tables():
             firstname VARCHAR(100),
             lastname VARCHAR(100),
             email VARCHAR(100),
-            phone_number VARCHAR(100)
+            phone_number VARCHAR(100),
+            age INT
         );""",
             is_fetch=False,
         ),
@@ -68,15 +71,15 @@ async def insert_into_users():
     await asyncio.gather(
         asyncio.to_thread(
             run_mysql,
-            SQL="""INSERT INTO Users(username, password, role, firstname, lastname, email, phone_number)
-                    VALUES(%s, %s, %s, %s, %s, %s, %s);""",
+            SQL="""INSERT INTO Users(username, password, role, firstname, lastname, email, phone_number, age)
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s);""",
             is_fetch=False,
             params=fake_user_data[:4],
         ),
         asyncio.to_thread(
             run_mysql,
-            SQL="""INSERT INTO Users(username, password, role, firstname, lastname, email, phone_number)
-                    VALUES(%s, %s, %s, %s, %s, %s, %s);""",
+            SQL="""INSERT INTO Users(username, password, role, firstname, lastname, email, phone_number, age)
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s);""",
             is_fetch=False,
             params=[
                 (
@@ -87,20 +90,21 @@ async def insert_into_users():
                     "admin",
                     "admin@admin.com",
                     "90123456789",
+                    23
                 )
             ],
         ),
         asyncio.to_thread(
             run_postgresql,
-            SQL="""INSERT INTO Users(username, password, role, firstname, lastname, email, phone_number)
-                    VALUES(%s, %s, %s, %s, %s, %s, %s);""",
+            SQL="""INSERT INTO Users(username, password, role, firstname, lastname, email, phone_number, age)
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s);""",
             is_fetch=False,
             params=fake_user_data[5:9],
         ),
         asyncio.to_thread(
             run_postgresql,
-            SQL="""INSERT INTO Users(username, password, role, firstname, lastname, email, phone_number)
-                    VALUES(%s, %s, %s, %s, %s, %s, %s);""",
+            SQL="""INSERT INTO Users(username, password, role, firstname, lastname, email, phone_number, age)
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s);""",
             is_fetch=False,
             params=[
                 (
@@ -111,6 +115,7 @@ async def insert_into_users():
                     "admin",
                     "admin@admin.com",
                     "90123456789",
+                    23
                 )
             ],
         ),

@@ -12,7 +12,7 @@ def run_mysql(SQL, is_fetch: bool = True, params=None):
             database=creds.MYSQL_DATABASE,
         )
 
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         if params:
             cursor.executemany(SQL, params)
         else:
@@ -35,7 +35,7 @@ def run_mysql(SQL, is_fetch: bool = True, params=None):
             conn.close()
 
 
-def run_postgresql(SQL, is_fetch: bool = True, params = None):
+def run_postgresql(SQL, is_fetch: bool = True, params=None):
     try:
         conn = psycopg.connect(
             host=creds.HOST,

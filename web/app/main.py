@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from .startup import create_users_tables, insert_into_users
+from ..routes.mysql import mysql_router
 
 
 @asynccontextmanager
@@ -19,7 +20,5 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-
-@app.get("/")
-def root():
-    return 1
+# include db routes
+app.include_router(mysql_router)

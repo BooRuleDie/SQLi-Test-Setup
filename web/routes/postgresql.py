@@ -1,14 +1,14 @@
 from fastapi import APIRouter
-from ..app.database import run_mysql
+from ..app.database import run_postgresql
 import asyncio
 
-mysql_router = APIRouter(prefix="/mysql", tags=["MySQL"])
+postgresql_router = APIRouter(prefix="/postgresql", tags=["postgresql"])
 
 
-@mysql_router.get("/where/int")
-async def mysql_where_int(user_id: str):
+@postgresql_router.get("/where/int")
+async def postgresql_where_int(user_id: str):
     response = await asyncio.to_thread(
-        run_mysql,
+        run_postgresql,
         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE user_id={user_id};""",
     )
 
@@ -21,10 +21,10 @@ async def mysql_where_int(user_id: str):
     return response[0]
 
 
-@mysql_router.get("/where/string")
-async def mysql_where_string(username: str):
+@postgresql_router.get("/where/string")
+async def postgresql_where_string(username: str):
     response = await asyncio.to_thread(
-        run_mysql,
+        run_postgresql,
         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE username='{username}';""",
     )
 
@@ -36,28 +36,28 @@ async def mysql_where_string(username: str):
 
     return response[0]
 
+# LIKE is not used for numeric values in PostgreSQL unlike MySQL
+# @postgresql_router.get("/like/int")
+# async def postgresql_like_int(age: str):
+#     response = await asyncio.to_thread(
+#         run_postgresql,
+#         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE age LIKE '%{age}%';""",
+#     )
 
-@mysql_router.get("/like/int")
-async def mysql_like_int(age: str):
+#     if not response:
+#         return {"message": "invalid age"}
+
+#     for index, user in enumerate(response):
+#         if user["role"] == "admin":
+#             del response[index]
+
+#     return response
+
+
+@postgresql_router.get("/like/string")
+async def postgresql_like_string(username: str):
     response = await asyncio.to_thread(
-        run_mysql,
-        SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE age LIKE '%{age}%';""",
-    )
-
-    if not response:
-        return {"message": "invalid age"}
-
-    for index, user in enumerate(response):
-        if user["role"] == "admin":
-            del response[index]
-
-    return response
-
-
-@mysql_router.get("/like/string")
-async def mysql_like_string(username: str):
-    response = await asyncio.to_thread(
-        run_mysql,
+        run_postgresql,
         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE username LIKE '%{username}%';""",
     )
 
@@ -71,10 +71,10 @@ async def mysql_like_string(username: str):
     return response
 
 
-@mysql_router.get("/order-by/int")
-async def mysql_order_by_int(index: str):
+@postgresql_router.get("/order-by/int")
+async def postgresql_order_by_int(index: str):
     response = await asyncio.to_thread(
-        run_mysql,
+        run_postgresql,
         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users ORDER BY {index};""",
     )
 
@@ -85,10 +85,10 @@ async def mysql_order_by_int(index: str):
     return response
 
 
-@mysql_router.get("/order-by/string")
-async def mysql_order_by_string(field_name: str):
+@postgresql_router.get("/order-by/string")
+async def postgresql_order_by_string(field_name: str):
     response = await asyncio.to_thread(
-        run_mysql,
+        run_postgresql,
         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users ORDER BY {field_name};""",
     )
 
@@ -99,10 +99,10 @@ async def mysql_order_by_string(field_name: str):
     return response
 
 
-@mysql_router.get("/in/int")
-async def mysql_in_int(user_ids: str):
+@postgresql_router.get("/in/int")
+async def postgresql_in_int(user_ids: str):
     response = await asyncio.to_thread(
-        run_mysql,
+        run_postgresql,
         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE user_id IN({user_ids});""",
     )
 
@@ -116,11 +116,11 @@ async def mysql_in_int(user_ids: str):
     return response
 
 
-@mysql_router.get("/in/string")
-async def mysql_in_string(usernames: str):
+@postgresql_router.get("/in/string")
+async def postgresql_in_string(usernames: str):
 
     response = await asyncio.to_thread(
-        run_mysql,
+        run_postgresql,
         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE username IN ({usernames});""",
     )
 

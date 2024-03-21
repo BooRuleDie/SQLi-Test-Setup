@@ -1,6 +1,7 @@
 import mysql.connector
 import psycopg
 from .config import creds
+from psycopg.rows import dict_row
 
 
 def run_mysql(SQL, is_fetch: bool = True, params=None):
@@ -43,6 +44,7 @@ def run_postgresql(SQL, is_fetch: bool = True, params=None):
             password=creds.POSTGRES_PASSWORD,
             dbname=creds.POSTGRES_DB,
             port=creds.POSTGRES_PORT,
+            row_factory=dict_row
         )
 
         cursor = conn.cursor()

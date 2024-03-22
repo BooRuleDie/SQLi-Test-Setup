@@ -1,0 +1,32 @@
+<div class="w-75 m-auto mb-5" style="overflow: auto">
+    <table class="table table-striped w-100" style="table-layout: auto">
+        <thead>
+            <tr>
+                <th scope="col">User_Id</th>
+                <th scope="col">Role</th>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+                <th scope="col">Firstname</th>
+                <th scope="col">Lastname</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phonenumber</th>
+                <th scope="col">Age</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for user in users %}
+            <tr>
+                <th scope="row">{{ user.user_id }}</th>
+                <td>{{ user.role }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone_number }}</td>
+                <td>{{ user.age }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

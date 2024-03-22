@@ -6,6 +6,7 @@ from .startup import create_users_tables, insert_into_users
 from ..routes.mysql import mysql_router
 from ..routes.postgresql import postgresql_router
 from .config import ALLOWED_DATABASES, ALLOWED_CONTEXTS
+from .database import run_mysql
 
 templates = Jinja2Templates(directory="web/templates")
 
@@ -65,7 +66,10 @@ async def home(request: Request, context: str = "where-int", db: str = "mysql"):
             "msg": "invalid context type",
             "allowed_contexts": ALLOWED_CONTEXTS,
         }
-    
-    return templates.TemplateResponse(f"{context}.html", {"request": request, "db": db})
 
-   
+    response = run_mysql(
+        "SELECT user_id, role, username, password, firstname, lastname, email, phone_number, age FROM Users;",
+        is_fetch=True,
+    )
+
+    return templates.TemplateResponse(f"index.html", {"request": request, "db": db, "users": response})

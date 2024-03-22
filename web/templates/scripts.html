@@ -1,0 +1,36 @@
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+    hljs.highlightAll();
+
+    const userInput = document.getElementById("user_input");
+    const sqlCodeElement = document.getElementById("sql");
+    const submitButton = document.getElementById("submit-button");
+    const jsonOutput = document.getElementById("json-output");
+
+    userInput.addEventListener("input", () => {
+        const userId = userInput.value;
+        sqlCodeElement.innerHTML = `<code id="sql" class="language-sql">SELECT user_id, username, firstname, lastname, email, role, age
+FROM Users
+WHERE user_id = ${userId};</code>`;
+        hljs.highlightAll();
+    });
+
+    submitButton.addEventListener("click", () => {
+        const userId = userInput.value;
+        fetch(`/mysql/where/int?user_id=${userId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                // console.log('JSON data:', data);
+                jsonOutput.innerHTML = `<code class="language-json" style="height: 350px">${JSON.stringify(
+                    data,
+                    null,
+                    2
+                )}</code>`;
+                hljs.highlightAll();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    });
+</script>

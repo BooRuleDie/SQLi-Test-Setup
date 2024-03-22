@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Start of HEAD -->
+    {% include 'head.html' %}
+    <!-- End of HEAD -->
+    <body>
+        <!-- Start of NAVBAR -->
+        {% include 'navbar.html' %}
+        <!-- End of NAVBAR -->
+
+        <!-- Start of HEADING -->
+        {% include 'heading.html' %}
+        <!-- End of HEADING -->
+
+        <!-- Start of SQL -->
+        {% include 'sql.html' %}
+        <!-- End of SQL -->
+        <div
+            class="d-flex flex-column flex-md-row justify-content-center mt-3 gap-5 w-75 m-auto"
+        >
+            <!-- Start of User Input & Output -->
+            {% include 'user-input-output.html' %}
+            <!-- Start of User Input & Output --> 
+            
+            <!-- Start of Backend -->
+            {% include 'backend.html' %}
+            <!-- End of Backend -->
+        </div>
+
+        <!-- Start of Database Info Table -->
+        {% include 'database-info.html' %}
+        <!-- End of Database Info Table -->
+
+        <!-- Start of Scripts -->
+        {% include 'scripts.html' %}
+        <!-- End of Scripts -->
+    </body>
+</html>

@@ -5,8 +5,8 @@ from contextlib import asynccontextmanager
 from .startup import create_users_tables, insert_into_users
 from ..routes.mysql import mysql_router
 from ..routes.postgresql import postgresql_router
-from .config import ALLOWED_DATABASES, ALLOWED_CONTEXTS
-from .database import run_mysql
+from .config import ALLOWED_DATABASES, ALLOWED_CONTEXTS, CONTEXT_CONFIG
+from .database import run_mysql, run_postgresql
 
 templates = Jinja2Templates(directory="web/templates")
 
@@ -37,24 +37,6 @@ app.include_router(postgresql_router)
 
 @app.get("/")
 async def home(request: Request, context: str = "where-int", db: str = "mysql"):
-    """
-    ## Possible context values
-    * where-int
-    * where-string
-    * like-int
-    * like-string
-    * order-by-int
-    * order-by-string
-    * in-int
-    * in-string
-
-    ## Possible db values
-    * mysql
-    * postgresql
-    * mssql
-    * oracle
-    """
-
     if db not in ALLOWED_DATABASES:
         return {
             "msg": "invalid database type",
@@ -67,9 +49,20 @@ async def home(request: Request, context: str = "where-int", db: str = "mysql"):
             "allowed_contexts": ALLOWED_CONTEXTS,
         }
 
-    response = run_mysql(
-        "SELECT user_id, role, username, password, firstname, lastname, email, phone_number, age FROM Users;",
-        is_fetch=True,
-    )
+    if db == "mysql":
+        response = run_mysql(
+            "SELECT user_id, role, username, password, firstname, lastname, email, phone_number, age FROM Users;",
+            is_fetch=True,
+        )
+    elif db == "postgresql":
+        response = run_postgresql(
+            "SELECT user_id, role, username, password, firstname, lastname, email, phone_number, age FROM Users;",
+            is_fetch=True,
+        )
 
-    return templates.TemplateResponse(f"index.html", {"request": request, "db": db, "users": response})
+    template_context = CONTEXT_CONFIG[db][context]
+    template_context["users_table_content"] = response
+
+    return templates.TemplateResponse(
+        f"index.html", {"request": request, "context": template_context}
+    )

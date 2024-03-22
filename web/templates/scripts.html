@@ -10,22 +10,20 @@
 
     userInput.addEventListener("input", () => {
         const userId = userInput.value;
-        sqlCodeElement.innerHTML = `<code id="sql" class="language-sql">SELECT user_id, username, firstname, lastname, email, role, age
-FROM Users
-WHERE user_id = ${userId};</code>`;
+        sqlCodeElement.innerHTML = {{ context.sql_update|safe }};
         hljs.highlightAll();
     });
 
     submitButton.addEventListener("click", () => {
         const userId = userInput.value;
-        fetch(`/mysql/where/int?user_id=${userId}`)
+        fetch({{ context.api_endpoint }})
             .then((response) => response.json())
             .then((data) => {
                 // console.log('JSON data:', data);
                 jsonOutput.innerHTML = `<code class="language-json" style="height: 350px">${JSON.stringify(
                     data,
                     null,
-                    2
+                    4
                 )}</code>`;
                 hljs.highlightAll();
             })

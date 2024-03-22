@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody class="table-group-divider">
-            {% for user in users %}
+            {% for user in context.users_table_content %}
             <tr>
                 <th scope="row">{{ user.user_id }}</th>
                 <td>{{ user.role }}</td>

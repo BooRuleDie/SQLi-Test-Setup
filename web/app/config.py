@@ -34,6 +34,7 @@ class CREDS(BaseSettings):
 creds = CREDS()
 
 ALLOWED_DATABASES = ("mysql", "postgresql", "mssql", "oracle")
+
 ALLOWED_CONTEXTS = (
     "where-int",
     "where-string",
@@ -44,6 +45,7 @@ ALLOWED_CONTEXTS = (
     "in-int",
     "in-string",
 )
+
 CONTEXT_CONFIG = {
     "mysql": {
         "where-int": {

@@ -8,17 +8,22 @@
 
     <title>SQLi Test</title>
     <style>
-        @media (max-width: 1023px) {
-            #user-input-output {
-                width: calc(100%);
-            }
+        #left-container {
+            display: inline-block;
+            width: calc(47%);
+            margin-right: 3%;
+        }
 
-            #backend-div {
-                width: calc(100%);
-            }
+        #right-container {
+            display: inline-block;
+            width: calc(49.5%);
+        }
 
-            #wrapper {
+        @media (max-width: 1024px) {
+            #left-container,
+            #right-container {
                 display: block;
+                width: 100%;
             }
         }
     </style>

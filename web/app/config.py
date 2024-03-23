@@ -51,6 +51,7 @@ CONTEXT_CONFIG = {
         "where-int": {
             "database_name": "MySQL",
             "badge": "WHERE-INT",
+            "placeholder": "user_id -> 1",
             "SQL": """SELECT user_id, username, firstname, lastname, email, role, age
 FROM Users
 WHERE user_id = 1;""",
@@ -70,7 +71,7 @@ async def mysql_where_int(user_id: str):
         SQL=f"""SELECT user_id, username, firstname,
         lastname, email, role, age
         FROM Users
-        WHERE user_id={user_id};""",
+        WHERE user_id={user_input};""",
     )
     
     if not response:
@@ -83,10 +84,49 @@ async def mysql_where_int(user_id: str):
             "users_table_content": [],
             "sql_update": """`<code id="sql" class="language-sql">SELECT user_id, username, firstname, lastname, email, role, age
 FROM Users
-WHERE user_id = ${userId};</code>`""",
-            "api_endpoint": "`/mysql/where/int?user_id=${userId}`",
+WHERE user_id = ${user_input};</code>`""",
+            "api_endpoint": "`/mysql/where/int?user_id=${user_input}`",
         },
-        "where-string": {},
+        "where-string": {
+            "database_name": "MySQL",
+            "badge": "WHERE-STRING",
+            "placeholder": "username -> christinajohnson",
+            "SQL": """SELECT user_id, username, firstname, lastname, email, role, age
+FROM Users
+WHERE username = 'christinajohnson';""",
+            "json_response": """{
+  "user_id": 1,
+  "username": "christinajohnson",
+  "firstname": "Matthew",
+  "lastname": "Marshall",
+  "email": "qortiz@example.org",
+  "role": "customer",
+  "age": 27
+}""",
+            "backend": '''@mysql_router.get("/where/string")
+async def mysql_where_string(username: str):
+    response = await asyncio.to_thread(
+        run_mysql,
+        SQL=f"""SELECT user_id, username, firstname, lastname, 
+        email, role, age 
+        FROM Users 
+        WHERE username='{username}';""",
+    )
+
+    if not response:
+        return {"message": "invalid username"}
+
+    if response[0]["role"] == "admin":
+        return {"message": "unauthorized action"}
+
+    return response[0]''',
+            "users_table_content": [],
+            "sql_update": """`<code id="sql" class="language-sql">SELECT user_id, username, firstname, lastname, email, role, age
+FROM Users
+WHERE username = '${user_input}';</code>`""",
+        "api_endpoint": "`/mysql/where/string?username=${user_input}`",
+
+        },
         "like-int": {},
         "like-string": {},
         "order-by-int": {},
@@ -96,7 +136,7 @@ WHERE user_id = ${userId};</code>`""",
     },
     "postgresql": {
         "where-int": {
-            "database_name": "MySQL",
+            "database_name": "PostgreSQL",
         },
         "where-string": {},
         "like-int": {},
@@ -108,7 +148,7 @@ WHERE user_id = ${userId};</code>`""",
     },
     "mssql": {
         "where-int": {
-            "database_name": "MySQL",
+            "database_name": "MSSQL",
         },
         "where-string": {},
         "like-int": {},
@@ -120,7 +160,7 @@ WHERE user_id = ${userId};</code>`""",
     },
     "oracle": {
         "where-int": {
-            "database_name": "MySQL",
+            "database_name": "ORACLE",
         },
         "where-string": {},
         "like-int": {},

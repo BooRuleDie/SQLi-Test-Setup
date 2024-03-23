@@ -56,13 +56,13 @@ CONTEXT_CONFIG = {
 FROM Users
 WHERE user_id = 1;""",
             "json_response": """{
-  "user_id": 1,
-  "username": "christinajohnson",
-  "firstname": "Matthew",
-  "lastname": "Marshall",
-  "email": "qortiz@example.org",
-  "role": "customer",
-  "age": 27
+    "user_id": 1,
+    "username": "christinajohnson",
+    "firstname": "Matthew",
+    "lastname": "Marshall",
+    "email": "qortiz@example.org",
+    "role": "customer",
+    "age": 27
 }""",
             "backend": '''@mysql_router.get("/where/int")
 async def mysql_where_int(user_id: str):
@@ -95,13 +95,13 @@ WHERE user_id = ${user_input};</code>`""",
 FROM Users
 WHERE username = 'christinajohnson';""",
             "json_response": """{
-  "user_id": 1,
-  "username": "christinajohnson",
-  "firstname": "Matthew",
-  "lastname": "Marshall",
-  "email": "qortiz@example.org",
-  "role": "customer",
-  "age": 27
+    "user_id": 1,
+    "username": "christinajohnson",
+    "firstname": "Matthew",
+    "lastname": "Marshall",
+    "email": "qortiz@example.org",
+    "role": "customer",
+    "age": 27
 }""",
             "backend": '''@mysql_router.get("/where/string")
 async def mysql_where_string(username: str):

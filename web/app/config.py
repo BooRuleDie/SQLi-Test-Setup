@@ -71,7 +71,7 @@ async def mysql_where_int(user_id: str):
         SQL=f"""SELECT user_id, username, firstname,
         lastname, email, role, age
         FROM Users
-        WHERE user_id={user_input};""",
+        WHERE user_id={user_id};""",
     )
     
     if not response:

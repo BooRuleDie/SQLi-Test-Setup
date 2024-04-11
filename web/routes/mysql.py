@@ -114,21 +114,3 @@ async def mysql_in_int(user_ids: str):
             del response[index]
 
     return response
-
-
-@mysql_router.get("/in/string")
-async def mysql_in_string(usernames: str):
-
-    response = await asyncio.to_thread(
-        run_mysql,
-        SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE username IN ({usernames});""",
-    )
-
-    if not response:
-        return {"message": "invalid usernames"}
-
-    for index, user in enumerate(response):
-        if user["role"] == "admin":
-            del response[index]
-
-    return response

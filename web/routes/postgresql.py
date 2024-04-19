@@ -116,19 +116,19 @@ async def postgresql_in_int(user_ids: str):
     return response
 
 
-@postgresql_router.get("/in/string")
-async def postgresql_in_string(usernames: str):
+# @postgresql_router.get("/in/string")
+# async def postgresql_in_string(usernames: str):
 
-    response = await asyncio.to_thread(
-        run_postgresql,
-        SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE username IN ({usernames});""",
-    )
+#     response = await asyncio.to_thread(
+#         run_postgresql,
+#         SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE username IN ({usernames});""",
+#     )
 
-    if not response:
-        return {"message": "invalid usernames"}
+#     if not response:
+#         return {"message": "invalid usernames"}
 
-    for index, user in enumerate(response):
-        if user["role"] == "admin":
-            del response[index]
+#     for index, user in enumerate(response):
+#         if user["role"] == "admin":
+#             del response[index]
 
-    return response
+#     return response

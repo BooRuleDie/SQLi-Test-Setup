@@ -549,6 +549,42 @@ async def postgresql_in_int(user_ids: str):
     "mssql": {
         "where-int": {
             "database_name": "MSSQL",
+            "badge": "WHERE-INT",
+            "placeholder": "user_id -> 1",
+            "SQL": """SELECT user_id, username, firstname, lastname, email, role, age
+FROM Users
+WHERE user_id = 1;""",
+            "json_response": """{
+    "user_id": 1,
+    "username": "christinajohnson",
+    "firstname": "Matthew",
+    "lastname": "Marshall",
+    "email": "qortiz@example.org",
+    "role": "customer",
+    "age": 27
+}""",
+            "backend": '''@mssql_router.get("/where/int")
+async def mssql_where_int(user_id: str):
+    response = await asyncio.to_thread(
+        run_mssql,
+        SQL=f"""SELECT user_id, username, firstname,
+        lastname, email, role, age
+        FROM Users
+        WHERE user_id={user_id};""",
+    )
+    
+    if not response:
+        return {"message": "invalid user_id"}
+    
+    if response[0]["role"] == "admin":
+        return {"message": "unauthorized action"}
+    
+    return response[0]''',
+            "users_table_content": [],
+            "sql_update": """`<code id="sql" class="language-sql">SELECT user_id, username, firstname, lastname, email, role, age
+FROM Users
+WHERE user_id = ${user_input};</code>`""",
+            "api_endpoint": "`/mssql/where/int?user_id=${user_input}`",
         },
         "where-string": {},
         "like-int": {},
@@ -561,6 +597,42 @@ async def postgresql_in_int(user_ids: str):
     "oracle": {
         "where-int": {
             "database_name": "ORACLE",
+            "badge": "WHERE-INT",
+            "placeholder": "user_id -> 1",
+            "SQL": """SELECT user_id, username, firstname, lastname, email, role, age
+FROM Users
+WHERE user_id = 1""",
+            "json_response": """{
+    "user_id": 1,
+    "username": "christinajohnson",
+    "firstname": "Matthew",
+    "lastname": "Marshall",
+    "email": "qortiz@example.org",
+    "role": "customer",
+    "age": 27
+}""",
+            "backend": '''@oracle_router.get("/where/int")
+async def oracle_where_int(user_id: str):
+    response = await asyncio.to_thread(
+        run_oracle,
+        SQL=f"""SELECT user_id, username, firstname,
+        lastname, email, role, age
+        FROM Users
+        WHERE user_id={user_id}""",
+    )
+    
+    if not response:
+        return {"message": "invalid user_id"}
+    
+    if response[0]["role"] == "admin":
+        return {"message": "unauthorized action"}
+    
+    return response[0]''',
+            "users_table_content": [],
+            "sql_update": """`<code id="sql" class="language-sql">SELECT user_id, username, firstname, lastname, email, role, age
+FROM Users
+WHERE user_id = ${user_input}</code>`""",
+            "api_endpoint": "`/oracle/where/int?user_id=${user_input}`",
         },
         "where-string": {},
         "like-int": {},

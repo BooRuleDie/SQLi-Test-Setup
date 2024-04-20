@@ -5,8 +5,10 @@ from contextlib import asynccontextmanager
 from .startup import create_users_tables, insert_into_users
 from ..routes.mysql import mysql_router
 from ..routes.postgresql import postgresql_router
+from ..routes.mssql import mssql_router
+from ..routes.oracle import oracle_router
 from .config import ALLOWED_DATABASES, ALLOWED_CONTEXTS, CONTEXT_CONFIG
-from .database import run_mysql, run_postgresql
+from .database import run_mysql, run_postgresql, run_mssql, run_oracle
 
 templates = Jinja2Templates(directory="web/templates")
 
@@ -33,6 +35,8 @@ app.mount("/static", StaticFiles(directory="./web/static"), name="static")
 # include db routes
 app.include_router(mysql_router)
 app.include_router(postgresql_router)
+app.include_router(mssql_router)
+app.include_router(oracle_router)
 
 
 @app.get("/")
@@ -56,6 +60,16 @@ async def home(request: Request, context: str = "where-int", db: str = "mysql"):
         )
     elif db == "postgresql":
         response = run_postgresql(
+            "SELECT user_id, role, username, password, firstname, lastname, email, phone_number, age FROM Users;",
+            is_fetch=True,
+        )
+    elif db == "oracle":
+        response = run_oracle(
+            "SELECT user_id, role, username, password, firstname, lastname, email, phone_number, age FROM Users",
+            is_fetch=True,
+        )
+    elif db == "mssql":
+        response = run_mssql(
             "SELECT user_id, role, username, password, firstname, lastname, email, phone_number, age FROM Users;",
             is_fetch=True,
         )

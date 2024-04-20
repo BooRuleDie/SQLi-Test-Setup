@@ -25,7 +25,7 @@ async def oracle_where_int(user_id: str):
 async def oracle_where_string(username: str):
     response = await asyncio.to_thread(
         run_oracle,
-        SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE username='{username}';""",
+        SQL=f"""SELECT user_id, username, firstname, lastname, email, role, age FROM Users WHERE username='{username}'""",
     )
 
     if not response:

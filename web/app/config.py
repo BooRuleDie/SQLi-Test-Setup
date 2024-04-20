@@ -819,8 +819,8 @@ async def mssql_in_int(user_ids: str):
     return response''',
             "users_table_content": [],
             "sql_update": """`<code id="sql" class="language-sql">SELECT user_id, username, firstname, lastname, email, role, age 
-FROM Users WHERE user_id 
-IN(${user_input});</code>`""",
+FROM Users 
+WHERE user_id IN(${user_input});</code>`""",
             "api_endpoint": "`/mssql/in/int?user_ids=${user_input}`",
         },
     },

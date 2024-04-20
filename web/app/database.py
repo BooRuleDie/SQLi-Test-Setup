@@ -9,7 +9,7 @@ from psycopg.rows import dict_row
 def run_mysql(SQL, is_fetch: bool = True, params=None):
     try:
         conn = mysql.connector.connect(
-            host=creds.HOST,
+            host=creds.MYSQL_HOSTNAME,
             user=creds.MYSQL_USERNAME,
             password=creds.MYSQL_ROOT_PASSWORD,
             database=creds.MYSQL_DATABASE,
@@ -41,7 +41,7 @@ def run_mysql(SQL, is_fetch: bool = True, params=None):
 def run_postgresql(SQL, is_fetch: bool = True, params=None):
     try:
         conn = psycopg.connect(
-            host=creds.HOST,
+            host=creds.POSTGRESQL_HOSTNAME,
             user=creds.POSTGRES_USERNAME,
             password=creds.POSTGRES_PASSWORD,
             dbname=creds.POSTGRES_DB,
@@ -77,7 +77,7 @@ def run_oracle(SQL, is_fetch=True, params=None):
         conn = oracledb.connect(
             user=creds.ORACLE_USERNAME,
             password=creds.ORACLE_PASSWORD,
-            dsn=f"{creds.HOST}/{creds.ORACLE_DATABASE}",
+            dsn=f"{creds.ORACLE_HOSTNAME}/{creds.ORACLE_DATABASE}",
             mode=oracledb.SYSDBA,
         )
         cursor = conn.cursor()
@@ -110,7 +110,7 @@ def run_oracle(SQL, is_fetch=True, params=None):
 def run_mssql(SQL, is_fetch=True, params=None):
     try:
         conn = pymssql.connect(
-            creds.HOST,
+            creds.MSSQL_HOSTNAME,
             creds.MSSQL_USERNAME,
             creds.MSSQL_SA_PASSWORD,
             creds.MSSQL_DATABASE,

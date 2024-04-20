@@ -12,22 +12,26 @@ class CREDS(BaseSettings):
     MYSQL_ROOT_PASSWORD: str
     MYSQL_DATABASE: str
     MYSQL_PORT: int
+    MYSQL_HOSTNAME: str
 
     POSTGRES_USERNAME: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
     POSTGRES_PORT: int
+    POSTGRESQL_HOSTNAME: str
 
     MSSQL_USERNAME: str
     MSSQL_DATABASE: str
     MSSQL_SA_PASSWORD: str
     MSSQL_PORT: int
+    MSSQL_HOSTNAME: str
 
     ORACLE_USERNAME: str
     ORACLE_DATABASE: str
     ORACLE_PASSWORD: str
     ORACLE_ROLE: str
     ORACLE_PORT: int
+    ORACLE_HOSTNAME: str
 
     ADMIN_PASSWORD: str
 
